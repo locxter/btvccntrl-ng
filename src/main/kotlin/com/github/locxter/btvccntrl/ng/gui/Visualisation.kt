@@ -99,7 +99,7 @@ class Visualisation() : JComponent() {
         context2d.fillRect(0, 0, width, height)
         if (showStartScreen) {
             // Draw a start screen if no visualisation has been requested yet
-            val font = Font(Font.SANS_SERIF, Font.PLAIN, 24)
+            val font = Font(Font.SANS_SERIF, Font.PLAIN, this.font.size)
             val metrics = context2d.getFontMetrics(font)
             val message = "Connect to robot vacuum to see the visualisation."
             context2d.font = font
