@@ -3,6 +3,7 @@ package com.github.locxter.btvccntrl.ng.gui
 import com.github.locxter.btvccntrl.ng.model.Botvac
 import com.github.locxter.btvccntrl.ng.model.Map
 import com.github.locxter.btvccntrl.ng.model.Point
+import com.github.locxter.btvccntrl.ng.model.Scan
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -16,7 +17,7 @@ class Visualisation() : JComponent() {
     var botvac: Botvac = Botvac()
         set(value) {
             val valueCopy = value.copy(
-                scan = Map(value.scan.points.map { Point(it.x, it.y) }.toMutableList()),
+                scan = Scan(value.scan.points.map { Point(it.x, it.y) }.toMutableList()),
                 map = Map(value.map.points.map { Point(it.x, it.y) }.toMutableList())
             )
             if (valueCopy.map.points.isNotEmpty()) {

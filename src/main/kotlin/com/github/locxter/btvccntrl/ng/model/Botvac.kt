@@ -15,7 +15,7 @@ data class Botvac(
     var rightFrontBumperPressed: Boolean = false,
     var leftSideBumperPressed: Boolean = false,
     var rightSideBumperPressed: Boolean = false,
-    var scan: Map = Map(),
+    var scan: Scan = Scan(),
     var map: Map = Map(),
     var x: Int = 0,
     var y: Int = 0,
