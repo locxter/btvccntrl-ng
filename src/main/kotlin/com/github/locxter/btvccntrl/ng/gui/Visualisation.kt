@@ -58,8 +58,8 @@ class Visualisation() : JComponent() {
             field = valueCopy
             repaint()
         }
-    var clickX: Int = -1
-    var clickY: Int = -1
+    var clickX: Int? = null
+    var clickY: Int? = null
     private var xMin: Int = 0
     private var xMax: Int = 0
     private var yMin: Int = 0

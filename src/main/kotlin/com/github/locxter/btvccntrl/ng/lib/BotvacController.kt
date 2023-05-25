@@ -312,7 +312,6 @@ class BotvacController() {
     private fun sendCommand(command: String): String {
         var rawResponse = ""
         if (useNetwork) {
-            println(command)
             val (request, response, result) = Fuel.upload(device, parameters = listOf("command" to command))
                 .authentication()
                 .basic("btvcbrdg", "btvcbrdg")

@@ -196,11 +196,11 @@ fun main(args: Array<String>) {
                     visualisation.botvac = botvac
                 }
                 // Plan path if wanted
-                if (botvac.map.points.isNotEmpty() && path.points.isEmpty() && visualisation.clickX != -1 && visualisation.clickY != -1) {
+                if (botvac.map.points.isNotEmpty() && path.points.isEmpty() && visualisation.clickX != null && visualisation.clickY != null) {
                     pathfinder.map = Map(botvac.map.points.map { Point(it.x, it.y) }.toMutableList())
                     path = pathfinder.findPath(
                         Point(botvac.x, botvac.y),
-                        Point(visualisation.clickX, visualisation.clickY)
+                        Point(visualisation.clickX!!, visualisation.clickY!!)
                     )
                     // Show a confirmation dialog
                     if (path.points.isNotEmpty()) {
@@ -229,8 +229,8 @@ fun main(args: Array<String>) {
                             null
                         )
                     }
-                    visualisation.clickX = -1
-                    visualisation.clickY = -1
+                    visualisation.clickX = null
+                    visualisation.clickY = null
                 }
                 // Follow path if possible
                 if (path.points.isNotEmpty()) {
