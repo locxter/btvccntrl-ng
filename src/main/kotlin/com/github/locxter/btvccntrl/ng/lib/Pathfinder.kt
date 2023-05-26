@@ -1,12 +1,13 @@
 package com.github.locxter.btvccntrl.ng.lib
 
+import com.github.locxter.btvccntrl.ng.model.EDirection
 import com.github.locxter.btvccntrl.ng.model.Map
 import com.github.locxter.btvccntrl.ng.model.Path
 import com.github.locxter.btvccntrl.ng.model.Point
 import kotlin.math.*
 
 class Pathfinder() {
-    private val directions = arrayOf(Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0))
+    private val directions = arrayOf(EDirection.DIRECTION_UP, EDirection.DIRECTION_RIGHT, EDirection.DIRECTION_DOWN, EDirection.DIRECTION_LEFT)
     var map = Map()
         set(value) {
             val simplifiedMap = Map()
@@ -118,8 +119,8 @@ class Pathfinder() {
             // Add successors to open list
             for (i in 0..3) {
                 val successorPoint = Point(
-                    currentNode.point.x + directions[i].x,
-                    currentNode.point.y + directions[i].y
+                    currentNode.point.x + directions[i].point.x,
+                    currentNode.point.y + directions[i].point.y
                 )
                 val successorPastCost = currentNode.pastCost + 1
                 // Skip invalid successor

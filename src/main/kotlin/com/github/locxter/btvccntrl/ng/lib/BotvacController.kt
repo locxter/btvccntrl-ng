@@ -5,6 +5,7 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.extensions.authentication
 import com.github.kittinunf.result.Result
 import com.github.locxter.btvccntrl.ng.model.Botvac
+import com.github.locxter.btvccntrl.ng.model.EDirection
 import com.github.locxter.btvccntrl.ng.model.Point
 import java.lang.Thread.sleep
 import kotlin.math.*
@@ -286,19 +287,19 @@ class BotvacController() {
 
     fun moveToPoint(point: Point, speed: Int) {
         if (connected) {
-            var direction = 0
+            var direction = EDirection.DIRECTION_UP
             var distance = abs(point.y - botvac.y)
             if (point.x < botvac.x) {
                 distance = abs(point.x - botvac.x)
-                direction = 3
+                direction = EDirection.DIRECTION_LEFT
             } else if (point.x > botvac.x) {
                 distance = abs(point.x - botvac.x)
-                direction = 1
+                direction = EDirection.DIRECTION_RIGHT
             } else if (point.y < botvac.y) {
-                direction = 2
+                direction = EDirection.DIRECTION_DOWN
             }
-            if (botvac.angle != (direction * 90)) {
-                var angleToGo = (direction * 90) - botvac.angle
+            if (botvac.angle != (direction.ordinal * 90)) {
+                var angleToGo = (direction.ordinal * 90) - botvac.angle
                 if (abs(angleToGo) == 270) {
                     angleToGo /= -3
                 }
