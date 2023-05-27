@@ -12,6 +12,7 @@ import kotlin.math.*
 
 class BotvacController() {
     var connected: Boolean = false
+        private set
     var device: String = ""
         private set
     var useNetwork: Boolean = false
