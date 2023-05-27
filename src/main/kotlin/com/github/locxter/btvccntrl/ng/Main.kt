@@ -19,6 +19,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import javax.swing.*
 import javax.swing.border.EmptyBorder
+import kotlin.system.exitProcess
 
 
 fun main(args: Array<String>) {
@@ -404,6 +405,6 @@ fun main(args: Array<String>) {
         // Throw an error on invalid number of command line arguments
         println("Wrong number of arguments. Two arguments containing the connection mode (serial or network) and device expected.")
         println("Example: serial /dev/ttyACM0")
-        return
+        exitProcess(1)
     }
 }
