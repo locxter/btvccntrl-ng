@@ -219,15 +219,9 @@ fun main(args: Array<String>) {
                             path.points.clear()
                         }
                     } else {
-                        JOptionPane.showOptionDialog(
-                            frame,
-                            "No path found",
-                            "Pathfinder",
-                            JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null,
-                            null,
-                            null
+                        JOptionPane.showMessageDialog(
+                            frame, "No path found", "Pathfinder",
+                            JOptionPane.INFORMATION_MESSAGE
                         )
                     }
                     visualisation.clickX = null
