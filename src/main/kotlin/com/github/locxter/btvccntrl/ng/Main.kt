@@ -66,7 +66,7 @@ fun main(args: Array<String>) {
         val rightWheelData = JLabel()
         val leftFrontLabel = JLabel("Left front:")
         val leftFrontData = JLabel()
-        val rightFrontLabel = JLabel("Pitch:")
+        val rightFrontLabel = JLabel("Right front:")
         val rightFrontData = JLabel()
         val leftSideLabel = JLabel("Left side:")
         val leftSideData = JLabel()
