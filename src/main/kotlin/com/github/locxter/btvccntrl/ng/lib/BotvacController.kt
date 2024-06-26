@@ -17,6 +17,8 @@ class BotvacController() {
         private set
     var useNetwork: Boolean = false
         private set
+    private var username: String = ""
+    private var password: String = ""
     private var serialPort: SerialPort = SerialPort.getCommPort("")
     var botvac: Botvac = Botvac()
     var minPointDistance: Int = 0
@@ -28,8 +30,12 @@ class BotvacController() {
             field = max(value, 0.0)
         }
 
-    constructor(device: String, useNetwork: Boolean) : this() {
-        connect(device, useNetwork)
+    constructor(device: String) : this() {
+        connect(device)
+    }
+
+    constructor(device: String, username: String, password: String) : this() {
+        connect(device, username, password)
     }
 
     constructor(minPointDistance: Int) : this() {
@@ -45,33 +51,47 @@ class BotvacController() {
         this.inaccuracyFilterRatio = inaccuracyFilterRatio
     }
 
-    constructor(device: String, useNetwork: Boolean, minPointDistance: Int) : this() {
-        connect(device, useNetwork)
+    constructor(device: String, minPointDistance: Int) : this() {
         this.minPointDistance = minPointDistance
+        connect(device)
     }
 
-    constructor(device: String, useNetwork: Boolean, inaccuracyFilterRatio: Double) : this() {
-        connect(device, useNetwork)
+    constructor(device: String, username: String, password: String, minPointDistance: Int) : this() {
+        this.minPointDistance = minPointDistance
+        connect(device, username, password)
+    }
+
+    constructor(device: String, inaccuracyFilterRatio: Double) : this() {
         this.inaccuracyFilterRatio = inaccuracyFilterRatio
+        connect(device)
     }
 
-    constructor(device: String, useNetwork: Boolean, minPointDistance: Int, inaccuracyFilterRatio: Double) : this() {
-        connect(device, useNetwork)
+    constructor(device: String, username: String, password: String, inaccuracyFilterRatio: Double) : this() {
+        this.inaccuracyFilterRatio = inaccuracyFilterRatio
+        connect(device, username, password)
+    }
+
+    constructor(device: String, minPointDistance: Int, inaccuracyFilterRatio: Double) : this() {
         this.minPointDistance = minPointDistance
         this.inaccuracyFilterRatio = inaccuracyFilterRatio
+        connect(device)
     }
 
-    fun connect(device: String, useNetwork: Boolean) {
+    constructor(device: String, username: String, password: String, minPointDistance: Int, inaccuracyFilterRatio: Double) : this() {
+        this.minPointDistance = minPointDistance
+        this.inaccuracyFilterRatio = inaccuracyFilterRatio
+        connect(device, username, password)
+    }
+
+    fun connect(device: String) {
         if (!connected) {
-            if (!useNetwork) {
-                serialPort = SerialPort.getCommPort(device)
-                serialPort.openPort()
-                serialPort.baudRate = 115200
-                serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 500, 0)
-            }
+            serialPort = SerialPort.getCommPort(device)
+            serialPort.openPort()
+            serialPort.baudRate = 115200
+            serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 500, 0)
             connected = true
             this.device = device
-            this.useNetwork = useNetwork
+            this.useNetwork = false
             sendCommand("TestMode On")
             sendCommand("SetLED BacklightOff")
             sendCommand("SetLED ButtonOff")
@@ -79,7 +99,22 @@ class BotvacController() {
             sendCommand("SetLDSRotation On")
             sleep(1000)
         }
+    }
 
+    fun connect(device: String, username: String, password: String) {
+        if (!connected) {
+            connected = true
+            this.device = device
+            this.useNetwork = true
+            this.username = username
+            this.password = password
+            sendCommand("TestMode On")
+            sendCommand("SetLED BacklightOff")
+            sendCommand("SetLED ButtonOff")
+            sendCommand("SetLED SpotOff")
+            sendCommand("SetLDSRotation On")
+            sleep(1000)
+        }
     }
 
     fun disconnect() {
@@ -96,6 +131,8 @@ class BotvacController() {
             connected = false
             useNetwork = false
             device = ""
+            username = ""
+            password = ""
             serialPort = SerialPort.getCommPort("")
             botvac = Botvac()
         }
@@ -316,7 +353,7 @@ class BotvacController() {
         if (useNetwork) {
             val (request, response, result) = Fuel.upload(device, parameters = listOf("command" to command))
                 .authentication()
-                .basic("btvcbrdg", "btvcbrdg")
+                .basic(username, password)
                 .responseString()
             when (result) {
                 is Result.Failure -> {

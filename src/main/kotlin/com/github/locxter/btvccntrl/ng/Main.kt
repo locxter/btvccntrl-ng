@@ -24,7 +24,7 @@ import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     // Check for the right number of command line arguments
-    if (args.size == 2) {
+    if ((args.size == 2 && args[0] == "serial") || (args.size == 4 && args[0] == "network")) {
         // Communication and navigation related variables
         val useNetwork = args[0] == "network"
         val device = args[1]
@@ -87,7 +87,11 @@ fun main(args: Array<String>) {
         // Add functions to the buttons
         connectButton.addActionListener {
             if (!botvacController.connected) {
-                botvacController.connect(device, useNetwork)
+                if (useNetwork) {
+                    botvacController.connect(device, args[2], args[3])
+                } else {
+                    botvacController.connect(device)
+                }
                 connectButton.text = "Disconnect"
             } else {
                 if (botvac.map.points.isNotEmpty()) {
@@ -397,8 +401,9 @@ fun main(args: Array<String>) {
         frame.isVisible = true
     } else {
         // Throw an error on invalid number of command line arguments
-        println("Wrong number of arguments. Two arguments containing the connection mode (serial or network) and device expected.")
+        println("Wrong number of arguments. At least arguments containing the connection mode (serial or network) and device expected. Network connections also require a username and password.")
         println("Example: serial /dev/ttyACM0")
+        println("Example: network http://btvcbrdg.local btvcbrdg btvcbrdg")
         exitProcess(1)
     }
 }
