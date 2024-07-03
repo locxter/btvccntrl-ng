@@ -17,4 +17,4 @@ I generally try to minimize dependencies, but I'm a one man crew and can therefo
 
 ## How to use it
 
-Build the JAR via `gladle clean standalone` and then run it via `java -jar build/libs/btvccntrl-ng-1.0-standalone.jar`.
+Build the JAR via `gradle clean standalone` and then run it via `java -jar build/libs/btvccntrl-ng-1.0-standalone.jar`.
