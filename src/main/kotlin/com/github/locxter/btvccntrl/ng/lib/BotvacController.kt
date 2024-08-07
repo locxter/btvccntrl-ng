@@ -243,7 +243,7 @@ class BotvacController() {
                 botvac.scan.points.add(
                     Point(
                         (distance * sin(-i * (PI / 180))).roundToInt(),
-                        (distance * cos(-i * (PI / 180))).roundToInt()
+                        ((distance * cos(-i * (PI / 180))) - 92.5).roundToInt()
                     )
                 )
                 val point = Point(
