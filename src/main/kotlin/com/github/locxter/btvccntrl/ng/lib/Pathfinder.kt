@@ -16,8 +16,8 @@ class Pathfinder() {
             for (point in value.points) {
                 simplifiedMap.points.add(
                     Point(
-                        round(point.x / simplificationFactor.toDouble()).roundToInt(),
-                        round(point.y / simplificationFactor.toDouble()).roundToInt(),
+                        (point.x / simplificationFactor.toDouble()).roundToInt(),
+                        (point.y / simplificationFactor.toDouble()).roundToInt(),
                     )
                 )
             }
@@ -42,7 +42,7 @@ class Pathfinder() {
                 if (point.x < xMin) {
                     xMin = point.x
                 } else if (point.x > xMax) {
-                    xMax = point.y
+                    xMax = point.x
                 }
                 if (point.y < yMin) {
                     yMin = point.y
@@ -51,9 +51,8 @@ class Pathfinder() {
                 }
             }
             // Move all the data to positive values
-            for (i in uniqueMap.points.indices) {
-                val oldPoint = uniqueMap.points[i]
-                uniqueMap.points[i] = Point(oldPoint.x - xMin, oldPoint.y - yMin)
+            uniqueMap.points.replaceAll {
+                Point(it.x - xMin, it.y - yMin)
             }
             field = uniqueMap
         }
@@ -88,12 +87,12 @@ class Pathfinder() {
         val simplifiedPath = Path()
         // Check for valid source and target
         val sourceAdjusted = Point(
-            round((source.x / simplificationFactor.toDouble()) - xMin).roundToInt(),
-            round((source.y / simplificationFactor.toDouble()) - yMin).roundToInt()
+            ((source.x / simplificationFactor.toDouble()) - xMin).roundToInt(),
+            ((source.y / simplificationFactor.toDouble()) - yMin).roundToInt()
         )
         val targetAdjusted = Point(
-            round((target.x / simplificationFactor.toDouble()) - xMin).roundToInt(),
-            round((target.y / simplificationFactor.toDouble()) - yMin).roundToInt()
+            ((target.x / simplificationFactor.toDouble()) - xMin).roundToInt(),
+            ((target.y / simplificationFactor.toDouble()) - yMin).roundToInt()
         )
         if (detectCollision(sourceAdjusted) || detectCollision(targetAdjusted)) {
             return simplifiedPath
